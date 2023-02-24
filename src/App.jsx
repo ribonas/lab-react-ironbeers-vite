@@ -7,7 +7,6 @@ import SingleBeer from './components/SingleBeer'
 import NewBeer from './components/NewBeer'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="App">
@@ -15,7 +14,8 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/AllBeers" element={<AllBeers />} />
       <Route path="/NewBeer" element={<NewBeer />} />
-      <Route path="/AllBeers/:beerId" element={<SingleBeer />} />
+      <Route path="/AllBeers/:beerId" element={<SingleBeer random={false}/>} />
+      <Route path="/RandomBeer" element={<SingleBeer random={true}/>} />
       </Routes>
     </div>
   )

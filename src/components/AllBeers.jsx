@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom'
 
 function AllBeers() {
   const [beers, setBeers] = useState([])
+  const [search, setSearch] = useState('')
   const fetchData = async () => {
     const response = await axios.get('https://ih-beers-api2.herokuapp.com/beers')
     setBeers(response.data)
@@ -18,7 +19,9 @@ function AllBeers() {
   return (
     <div>
     <Navbar />
-    {beers.map(beer => (
+    <input type='text' value={search} onChange = {event => setSearch(event.target.value)} />
+    {beers.map(beer => beer.name.toLowerCase().includes(search.toLowerCase())? (
+
     <Link to={`/AllBeers/${beer._id}`}>
     <div key={beer._id}>
     <img src={beer.image_url} alt='beer' style={{height: '6rem'}}/>
@@ -26,8 +29,7 @@ function AllBeers() {
     <h4>{beer.tagline}</h4>
     <h6>Created by: {beer.contributed_by}</h6>
     </div>
-    </Link>
-    ))}
+    </Link>): null)}
     </div>
   )
 }

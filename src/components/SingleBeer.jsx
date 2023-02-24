@@ -3,17 +3,21 @@ import Navbar from './Navbar'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
-function SingleBeer() {
+function SingleBeer({random}) {
     const [beer, setBeer] = useState({
 
   })
-  const {beerId} = useParams()
+  const {beerId} = useParams() 
   
   useEffect(() => {
     async function fetchBeer() {
-      const response = await axios.get(
+      let response = {}
+      random ? (response = await axios.get(`https://ih-beers-api2.herokuapp.com/beers/random`))
+      :
+      (response =
+      await axios.get(
         `https://ih-beers-api2.herokuapp.com/beers/${beerId}`
-      );
+      ));
       setBeer(response.data);
     }
     fetchBeer();
