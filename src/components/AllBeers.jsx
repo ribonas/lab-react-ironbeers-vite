@@ -12,15 +12,25 @@ function AllBeers() {
     setBeers(response.data)
   }
 
+    const fetchSearch = async () => {
+        const q = search.toLowerCase()
+        const response = await axios.get(`https://ih-beers-api2.herokuapp.com/beers/search?q=${q}`)
+        setBeers(response.data)}
+
   useEffect(() => {
     fetchData()
   }, [])
+
+  useEffect(() => {
+    fetchSearch()
+  }
+  , [search])
 
   return (
     <div>
     <Navbar />
     <input type='text' value={search} onChange = {event => setSearch(event.target.value)} />
-    {beers.map(beer => beer.name.toLowerCase().includes(search.toLowerCase())? (
+    {beers.map(beer => (
 
     <Link to={`/AllBeers/${beer._id}`}>
     <div key={beer._id}>
@@ -29,7 +39,8 @@ function AllBeers() {
     <h4>{beer.tagline}</h4>
     <h6>Created by: {beer.contributed_by}</h6>
     </div>
-    </Link>): null)}
+    </Link>
+    ))}
     </div>
   )
 }
